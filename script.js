@@ -34,6 +34,7 @@ class Calculator {
     let computation;
     const prev = parseFloat(this.previousOperand);
     const current = parseFloat(this.currentOperand);
+    console.log(this.operation)
     if (isNaN(prev) || isNaN(current)) return;
     switch (this.operation) {
       case "+":
@@ -56,29 +57,35 @@ class Calculator {
     this.previousOperand = "";
   }
 
-  getDisplayNumber(number){
-      const stringNumber = number.toString()
-      const integerDigits = parseFloat(stringNumber.split('.')[0])
-      const decimalDigits = stringNumber.split('.')[1]
-        let integerDisplay
-        if(isNaN(integerDigits)) {
-            integerDisplay = ''
-        }else {
-            integerDisplay = integerDigits.toLocaleString('en', {maximumFractionDigits: 0})
-        }
-        if(decimalDigits != null) {
-            return `${integerDisplay}.${decimalDigits}`
-        } else {
-            return integerDisplay
-        }
+  getDisplayNumber(number) {
+    const stringNumber = number.toString();
+    const integerDigits = parseFloat(stringNumber.split(".")[0]);
+    const decimalDigits = stringNumber.split(".")[1];
+    let integerDisplay;
+    if (isNaN(integerDigits)) {
+      integerDisplay = "";
+    } else {
+      integerDisplay = integerDigits.toLocaleString("en", {
+        maximumFractionDigits: 0,
+      });
+    }
+    if (decimalDigits != null) {
+      return `${integerDisplay}.${decimalDigits}`;
+    } else {
+      return integerDisplay;
+    }
   }
 
   updateDisplay() {
-    this.currentOperandTextElement.innerText = this.getDisplayNumber(this.currentOperand) ;
+    this.currentOperandTextElement.innerText = this.getDisplayNumber(
+      this.currentOperand
+    );
     if (this.operation != null) {
-      this.previousOperandTextElement.innerText = `${this.getDisplayNumber(this.previousOperand)} ${this.operation}`;
-    } else{
-        this.previousOperandTextElement.innerText = ""
+      this.previousOperandTextElement.innerText = `${this.getDisplayNumber(
+        this.previousOperand
+      )} ${this.operation}`;
+    } else {
+      this.previousOperandTextElement.innerText = "";
     }
   }
 }
@@ -128,3 +135,76 @@ deleteButton.addEventListener("click", (button) => {
   calculator.delete();
   calculator.updateDisplay();
 });
+
+document.addEventListener("keydown", (e) => keyboardSupport(e));
+
+function keyboardSupport(key) {
+  switch (key.keyCode) {
+    case 8:
+        calculator.delete();
+        calculator.updateDisplay();
+        break;
+    case 13:
+      calculator.compute();
+      calculator.updateDisplay();
+      break;
+    case 96:
+      calculator.appendNumber("0");
+      calculator.updateDisplay();
+      break;
+    case 97:
+      calculator.appendNumber("1");
+      calculator.updateDisplay();
+      break;
+    case 98:
+      calculator.appendNumber("2");
+      calculator.updateDisplay();
+      break;
+    case 99:
+      calculator.appendNumber("3");
+      calculator.updateDisplay();
+      break;
+    case 100:
+      calculator.appendNumber("4");
+      calculator.updateDisplay();
+      break;
+    case 101:
+      calculator.appendNumber("5");
+      calculator.updateDisplay();
+      break;
+    case 102:
+      calculator.appendNumber("6");
+      calculator.updateDisplay();
+      break;
+    case 103:
+      calculator.appendNumber("7");
+      calculator.updateDisplay();
+      break;
+    case 104:
+      calculator.appendNumber("8");
+      calculator.updateDisplay();
+      break;
+    case 105:
+      calculator.appendNumber("9");
+      calculator.updateDisplay();
+      break;
+    case 106:
+      calculator.chooseOperation("*");
+      calculator.updateDisplay();
+      break;
+    case 107:
+      calculator.chooseOperation("+");
+      calculator.updateDisplay();
+      break;
+    case 109:
+      calculator.chooseOperation("-");
+      calculator.updateDisplay();
+      break;
+    case 111:
+      calculator.chooseOperation("÷");
+      calculator.updateDisplay();
+      break;
+    default:
+      break;
+  }
+}
